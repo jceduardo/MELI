@@ -43,7 +43,6 @@ def highestInternationalStudents(firstCity, secondCity):
                 internationalStudents = int(internationalStudents)             
                 if item['location']['city'] == firstCity and \
                     internationalStudents > highestInternationalStudentsCity['firstCity']['numberOfInternationalStudents']:
-                        #print(item['university'] + ' - ' + item['location']['city'] + ' - ' + item['location']['country'] + ' - ' + item['location']['region'] + ' - ' + item['international_students'])
                         highestInternationalStudentsCity['firstCity'] = {
                             'university': item['university'],
                             'numberOfInternationalStudents': internationalStudents
@@ -51,7 +50,6 @@ def highestInternationalStudents(firstCity, secondCity):
                     
                 if item['location']['city'] == secondCity and \
                     internationalStudents > highestInternationalStudentsCity['secondCity']['numberOfInternationalStudents']:
-                        #print(item['university'] + ' - ' + item['location']['city'] + ' - ' + item['location']['country'] + ' - ' + item['location']['region'] + ' - ' + item['international_students'])
                         highestInternationalStudentsCity['secondCity'] = {
                             'university': item['university'],
                             'numberOfInternationalStudents': internationalStudents
