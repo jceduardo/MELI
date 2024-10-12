@@ -2,7 +2,7 @@ import mysql.connector
 from mysql.connector import Error
 
 def load_customers(cursor):
-    cursor.execute("SELECT * FROM customers")
+    cursor.execute("SELECT id, first_name FROM customers")
             
     # Get all customers
     records = cursor.fetchall()
@@ -11,15 +11,14 @@ def load_customers(cursor):
     for row in records:
         customer = {
             'id': row[0], 
-            'firstName': row[1], 
-            'lastName': row[2]
+            'firstName': row[1]
         }
         customers.append(customer)  
 
     return customers
 
 def load_campaigns(cursor):
-    cursor.execute("SELECT * FROM campaigns")
+    cursor.execute("SELECT id, customer_id FROM campaigns")
             
     # Get all campaigns
     campaign_records = cursor.fetchall()
@@ -28,15 +27,14 @@ def load_campaigns(cursor):
     for row in campaign_records:
         campaign = {
             'id': row[0], 
-            'customerId': row[1], 
-            'name': row[2]
+            'customerId': row[1]
         }
         campaigns.append(campaign)
 
     return campaigns
 
 def load_events(cursor, customers, campaigns):
-    cursor.execute("SELECT * FROM events")
+    cursor.execute("SELECT dt, campaign_id, status  FROM events")
 
     # Get all events
     event_records = cursor.fetchall()
@@ -54,8 +52,6 @@ def load_events(cursor, customers, campaigns):
                 customer_name = customer['firstName']
                 break
         event = {
-            'dt': row[0], 
-            'campaignId': row[1], 
             'status': row[2],
             'customerName': customer_name
         }
@@ -68,8 +64,8 @@ def connect_to_database():
         connection = mysql.connector.connect(
             host='localhost',        
             database='db_advertising_failures',  
-            user='******',       
-            password='******'  
+            user='**********',       
+            password='**********'  
         )
 
     except Error as e:
@@ -106,15 +102,18 @@ def failures_report():
                 if item['status'] == 'failure':
                     resultado[customerName] += 1
 
+            print("customer    failures")
+            print("========    ========")
             for customerName, quantity in resultado.items():
                 if quantity > 3: # Filter customers with more than 3 events with status = 'failure'
-                    print(f"{customerName}, {quantity}")
+                    print(f"{customerName}" + (12 - len(customerName)) * ' ' + f"{quantity}")
 
     except Error as e:
         print(f"Database error: {e}")
     
     finally:
-        if connection.is_connected(): # Close connection
+        # Close connection
+        if connection.is_connected(): 
             cursor.close()
             connection.close()
 

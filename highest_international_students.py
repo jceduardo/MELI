@@ -65,12 +65,12 @@ def highestInternationalStudents(firstCity, secondCity):
     return highestInternationalStudentsUniversity         
 
 if __name__ == "__main__":                 
-    print('1.' + highestInternationalStudents('Pune', 'New Delhi')) 
-    print('2.' + highestInternationalStudents('Cambridge', 'Santiago')) # Several universities in cities
-    print('3.' + highestInternationalStudents('', 'Zürich'))
-    print('4.' + highestInternationalStudents('London', '')) # Several universities in cities
-    print('5.' + highestInternationalStudents('', ''))   
-    print('6.' + highestInternationalStudents(None, '')) 
-    print('7.' + highestInternationalStudents('', None)) 
-    print('8.' + highestInternationalStudents(None, None)) # Return empty
-    print('9.' + highestInternationalStudents('MockCity1', 'MockCity2')) # Cities doesn't exists and return empty
+    print(highestInternationalStudents('Pune', 'New Delhi')) 
+    print(highestInternationalStudents('Cambridge', 'Santiago')) 
+    print(highestInternationalStudents('', 'Zürich'))
+    print(highestInternationalStudents(None, '')) 
+    print(highestInternationalStudents('', None)) 
+    print(highestInternationalStudents(None, None)) 
+    print(highestInternationalStudents('', ''))   
+    print(highestInternationalStudents('MockCity1', 'MockCity2')) 
+    print(highestInternationalStudents('London', '')) 

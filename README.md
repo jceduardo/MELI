@@ -6,30 +6,30 @@ Source: highest_international_students.py
 
 **Test Data and Output**
 
-| Row | First City  | Second City   | Output                                      |
-|-----|-------------|---------------|---------------------------------------------|
-|  1  | Pune        | New Delhi     | Indian Institute of Technology Delhi (IITD) |
-|  2  | Cambridge   | Santiago      | University of Cambridge                     |
-|  3  | Zürich      |               | Sorbonne University                         |
-|  4  | London      |               | UCL                                         |
-|  5  |             |               | Sorbonne University                         |
-|  6  | None        |               | Sorbonne University                         |
-|  7  |             | None          | Sorbonne University                         |
-|  8  | None        | None          |                                             |
-|  9  | MockCity1   | MockCity2     |                                             |
+| N | First City   | Second City | Output                                      | Explanation                |
+|---|--------------|-------------|---------------------------------------------|----------------------------|
+| 1 | Pune         | New Delhi   | Indian Institute of Technology Delhi (IITD) | Output of the challenge    |
+| 2 | Cambridge    | Santiago    | University of Cambridge                     | Several UNIVs in Cambridge |
+| 3 | Empty string | Zürich      | Sorbonne University                         | Empty string has an UNIV   |
+| 4 | None         |             | Sorbonne University                         | Empty string has an UNIV   |
+| 5 | Empty string | None        | Sorbonne University                         | Empty string has an UNIV   |
+| 6 | None         | None        |                                             | Return empty string        |
+| 7 | Empty string |             | Sorbonne University                         | Empty string has an UNIV   |
+| 8 | MockCity1    | MockCity2   |                                             | Return empty string        |
+| 9 | London       |             | UCL                                         | Several UNIVs in London    | 
 
 **Output Script**
 
 ```
-1.Indian Institute of Technology Delhi (IITD) 
-2.University of Cambridge                      
-3.Sorbonne University                           
-4.UCL                                          
-5.Sorbonne University                          
-6.Sorbonne University                          
-7.Sorbonne University                          
-8.                                             
-9.                                             
+Indian Institute of Technology Delhi (IITD) 
+University of Cambridge                      
+Sorbonne University                          
+Sorbonne University                          
+Sorbonne University                          
+                                        
+Sorbonne University                                  
+                                               
+UCL                                         
 ```
 
 # Challenge 2
@@ -123,6 +123,8 @@ COMMIT;
 **Execution Result**
 
 ```
-Whitney, 6 
-John, 4
+customer    failures
+========    ========
+Whitney     6       
+John        4       
 ```
