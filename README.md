@@ -16,15 +16,17 @@
 
 **Output Script**
 
-| 1.Indian Institute of Technology Delhi (IITD) | 
-| 2.University of Cambridge                     | 
-| 3.Sorbonne University                         |  
-| 4.UCL                                         | 
-| 5.Sorbonne University                         | 
-| 6.Sorbonne University                         | 
-| 7.Sorbonne University                         | 
-| 8.                                            | 
-| 9.                                            | 
+```
+1.Indian Institute of Technology Delhi (IITD) 
+2.University of Cambridge                      
+3.Sorbonne University                           
+4.UCL                                          
+5.Sorbonne University                          
+6.Sorbonne University                          
+7.Sorbonne University                          
+8.                                             
+9.                                             
+```
 
 # Challenge 2
 
@@ -147,7 +149,7 @@ COMMIT;
 
 **Execution Result**
 
-| Whitney, 6 | 
-| John, 4    | 
-
-
+```
+Whitney, 6 
+John, 4
+```
