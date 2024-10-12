@@ -1,61 +1,37 @@
 import mysql.connector
 from mysql.connector import Error
 
-def load_customers(cursor):
-    cursor.execute("SELECT id, first_name FROM customers")
-            
-    # Get all customers
-    records = cursor.fetchall()
+def calculateFailureEvents(cursor):
+    cursor.execute(
+        """
+            select 
+ 	            cus.first_name, 
+                count(eve.status) as quantity
+            from 
+                customers cus,  
+                campaigns cam,
+                events eve 
+            where
+                cus.id = cam.customer_id and 
+                cam.id = eve.campaign_id and 
+                eve.status = 'failure'
+            group by 
+                cus.first_name
+            having 
+                quantity > 3
+        """
+    )
 
-    customers = []
-    for row in records:
-        customer = {
-            'id': row[0], 
-            'firstName': row[1]
-        }
-        customers.append(customer)  
-
-    return customers
-
-def load_campaigns(cursor):
-    cursor.execute("SELECT id, customer_id FROM campaigns")
-            
-    # Get all campaigns
-    campaign_records = cursor.fetchall()
-
-    campaigns = []
-    for row in campaign_records:
-        campaign = {
-            'id': row[0], 
-            'customerId': row[1]
-        }
-        campaigns.append(campaign)
-
-    return campaigns
-
-def load_events(cursor, customers, campaigns):
-    cursor.execute("SELECT dt, campaign_id, status  FROM events")
-
-    # Get all events
+    # Retrieve all events rows from the results of the query
     event_records = cursor.fetchall()
 
     events = []
     for row in event_records:
-        customer_id = 0
-        for campaign in campaigns:
-            if campaign['id'] == row[1]:
-                customer_id = campaign['customerId']
-                break
-        customer_name = ''
-        for customer in customers:
-            if customer['id'] == customer_id:
-                customer_name = customer['firstName']
-                break
         event = {
-            'status': row[2],
-            'customerName': customer_name
+            'firstName': row[0], 
+            'quantity': row[1]
         }
-        events.append(event) 
+        events.append(event)
 
     return events
 
@@ -64,8 +40,8 @@ def connect_to_database():
         connection = mysql.connector.connect(
             host='localhost',        
             database='db_advertising_failures',  
-            user='**********',       
-            password='**********'  
+            user='******',       
+            password='******'  
         )
 
     except Error as e:
@@ -82,31 +58,14 @@ def failures_report():
             # Create cursor in order to execute queries
             cursor = connection.cursor()
 
-            # Load customers
-            customers = load_customers(cursor)      
-
-            # Load campaigns
-            campaigns = load_campaigns(cursor)
-
-            # Load events
-            events = load_events(cursor, customers, campaigns)
-            
-            # Dictionary to store results
-            resultado = {}
-
-            # Group by customer's name
-            for item in events:
-                customerName = item['customerName']                
-                if customerName not in resultado:
-                    resultado[customerName] = 0
-                if item['status'] == 'failure':
-                    resultado[customerName] += 1
+            # Calculate number of failures grouping by customer's first name 
+            events = calculateFailureEvents(cursor)
 
             print("customer    failures")
             print("========    ========")
-            for customerName, quantity in resultado.items():
-                if quantity > 3: # Filter customers with more than 3 events with status = 'failure'
-                    print(f"{customerName}" + (12 - len(customerName)) * ' ' + f"{quantity}")
+            for customer in events:
+                firstName = customer['firstName']
+                print(f"{firstName}" + (12 - len(firstName)) * ' ' + f"{customer['quantity']}")
 
     except Error as e:
         print(f"Database error: {e}")
